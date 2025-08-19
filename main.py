@@ -3,6 +3,7 @@ import mediapipe as mp
 import math
 import pyautogui
 from Dependencies import *
+import time
 
 # -------------------------------
 # Setup MediaPipe Hands & PyAutoGUI
@@ -86,7 +87,7 @@ with mp_hands.Hands(
                 # -------------------------------
                 # Left click control
                 # -------------------------------
-                if length_lineTI < 30:
+                if length_lineTI < 19:
                     colorTI = (0, 0, 255)
                     if not holding_left:
                         pyautogui.mouseDown(button='left')
@@ -100,7 +101,7 @@ with mp_hands.Hands(
                 # -------------------------------
                 # Right click control
                 # -------------------------------
-                if length_lineTM < 30:
+                if length_lineTM < 23:
                     colorTM = (0, 255, 0)
                     if not holding_right:
                         pyautogui.mouseDown(button='right')
