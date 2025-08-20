@@ -11,12 +11,21 @@ import time
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+
 screen_w, screen_h = pyautogui.size()
 
 # Track if mouse buttons are currently held
 holding_left = False
 holding_right = False
 
+#Setup Smoothing
+prev_x, prev_y = 0, 0
+smooth_factor = 0.4  # smaller = smoother, larger = more responsive
+
+#Disable fail-safe (makes movement not work as well)
+pyautogui.FAILSAFE = False
 # -------------------------------
 # Start hand detection
 # -------------------------------
@@ -115,9 +124,11 @@ with mp_hands.Hands(
                 # -------------------------------
                 # Move mouse based on thumb-index midpoint
                 # -------------------------------
-                screen_x = int(remap(midPointXTI, old_min=0, old_max=540, new_min=0, new_max=1920))
-                screen_y = int(remap(midPointYTI, old_min=0, old_max=380, new_min=0, new_max=1080))
-                pyautogui.moveTo(screen_x, screen_y)
+                screen_x = int(remap(midPointXTI, old_min=60, old_max=260, new_min=0, new_max=screen_w))
+                screen_y = int(remap(midPointYTI, old_min=60, old_max=180, new_min=0, new_max=screen_h))
+                prev_x = int(prev_x + (screen_x - prev_x) * smooth_factor)
+                prev_y = int(prev_y + (screen_y - prev_y) * smooth_factor)
+                pyautogui.moveTo(prev_x, prev_y)
 
         # -------------------------------
         # Display camera frame
