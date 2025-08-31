@@ -16,6 +16,7 @@ while True:
                 idx = apps.index(word)
                 open_app(apps[idx])
                 print (f"Opening {apps[idx]}")
+                readAloud(f"Opening {apps[idx]}")
                 words.clear()
             else:
                 print ("NO COMMAND GIVEN. TRY AGAIN")

@@ -1,7 +1,7 @@
 from SETUP import *
 import speech_recognition as sr
 import os
-
+import pyttsx3
 
 
 def listen():
@@ -23,3 +23,8 @@ def listen():
 def open_app(app_name):
     os.startfile(paths[app_name])
 
+
+def readAloud(message):
+    engine = pyttsx3.init()
+    engine.say(message)
+    engine.runAndWait()
